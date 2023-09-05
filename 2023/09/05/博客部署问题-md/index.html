@@ -464,7 +464,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="本地运行访问正常，部署到-github-page-后加载不出-css-样式"><a href="#本地运行访问正常，部署到-github-page-后加载不出-css-样式" class="headerlink" title="本地运行访问正常，部署到 github page 后加载不出 css 样式"></a>本地运行访问正常，部署到 github page 后加载不出 css 样式</h3>
+                <h2 id="本地运行访问正常，部署到-github-上后加载不出-css-样式"><a href="#本地运行访问正常，部署到-github-上后加载不出-css-样式" class="headerlink" title="本地运行访问正常，部署到 github 上后加载不出 css 样式"></a>本地运行访问正常，部署到 github 上后加载不出 css 样式</h2><p>问题如上，在本地能够正常访问，但是 <code>hexo d</code> 上传到 github 后，<strong>能够访问页面但不能加载 CSS 样式文件</strong>。  </p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>遇到这种能够访问页面但无法加载内容的问题，首先肯定是要用 F12   </p>
+<p>请求成功的情况如图：</p>
+<div align="left"><img src="./images/博客部署问题/请求成功的地址.png" width="100%"/></div>  
+
+<p>而请求失败的情况则如图：</p>
+<div align="left"><img src="./images/博客部署问题/请求失败的地址.png" width="100%"/></div>  
+
+<p>可以看到请求失败的响应码是 404，说明请求地址是有问题的。它请求的是 “helloworldyc.github.io&#x2F;“ 这个根目录下的资源，但是我们的博客项目的路径应该是 “helloworldyc.github.io&#x2F;blog-myc&#x2F;“，因此可以判断是 hexo 配置有问题。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>原来的 _config.yml 文件中设置的路径是：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">url:</span> <span class="string">https://helloworldyc.github.io/blog-myc</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/</span></span><br></pre></td></tr></table></figure>
+
+<p>将其改为：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">url:</span> <span class="string">https://helloworldyc.github.io/</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/blog-myc</span></span><br></pre></td></tr></table></figure>
+
+<p><code>hexo clean</code> 后 <code>hexo g</code> 重新生成并部署到 github <code>hexo d</code>，重新刷新页面，可以发现页面加载没有问题。</p>
+
                 
             </div>
             <hr/>
