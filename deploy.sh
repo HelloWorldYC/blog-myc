@@ -16,10 +16,17 @@ echo '执行命令：git push -f git@github.com:HelloWorldYC/blog-myc.git master
 git push -f git@github.com:HelloWorldYC/blog-myc.git master
 
 
+# 进入 public 文件夹
+echo "执行命令：cd ./docs/.vuepress/dist\n"
+cd ./public
 
 # 把网页文件发布到 blog-myc 仓库的 gh-page 分支
-echo "执行命令：hexo d"
-hexo d
+echo '执行命令：git add -A'
+git add -A
+echo "git commit -m "
+git commit -m "update blog on $var1"
+echo "执行命令：git push -f https://github.com/HelloWorldYC/blog-myc.git master:gh-pages"
+git push -f https://github.com/HelloWorldYC/blog-myc.git master:gh-pages
 
 echo "回到刚才工作目录"
 cd -
