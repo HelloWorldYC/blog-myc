@@ -134,6 +134,7 @@ indexbtn:
 socialLink:
   github:  https://github.com/HelloWorldYC
   email: 1228145722@qq.com
+  # weixin: 15625060590
   qq: 1228145722
 
 # Whether to activate the Post TOC, and Configure which title types are supported by TOC support.
