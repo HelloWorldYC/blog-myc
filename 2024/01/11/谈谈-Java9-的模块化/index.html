@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, myc的博客">
+    <meta name="keywords" content="谈谈 Java9+ 的模块化, myc的博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | myc的博客</title>
+    <title>谈谈 Java9+ 的模块化 | myc的博客</title>
     <link rel="icon" type="image/png" href="/blog-myc/myfavicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog-myc/libs/awesome/css/all.css">
@@ -262,12 +262,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/blog-myc/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/blog-myc/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">谈谈 Java9+ 的模块化</h1>
                 </div>
             </div>
         </div>
@@ -381,9 +381,17 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/blog-myc/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                            <a href="/blog-myc/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/">
+                                <span class="chip bg-color">模块化</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -399,14 +407,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    73
+                    1.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    7 分
                 </div>
                 
 
@@ -424,19 +432,78 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <p>这几天，因为打包方面的一点问题，在查资料的过程中，接触到了模块化，顺便也实践了一下，我觉得这是一个挺有用的东西，因此在这里分享一下。</p>
+<h2 id="什么是模块？"><a href="#什么是模块？" class="headerlink" title="什么是模块？"></a>什么是模块？</h2><p>模块是 Java9 中提出的一个新概念，本质上是一个 jar 包，但是它比普通的 jar 包多了一个文件 <code>module-info.class</code> 文件，这是模块的核心，也称之为模块描述符——<code>module descriptor</code> 。   </p>
+<p>在 <code>module descriptor</code> 中，定义了以下的信息：</p>
+<ul>
+<li>模块名称</li>
+<li>依赖哪些模块</li>
+<li>导出模块内的哪些包（允许直接 <code>import</code> 使用）</li>
+<li>开放模块内的哪些包（允许通过 Java 反射访问）</li>
+<li>提供哪些服务</li>
+<li>依赖哪些服务</li>
+</ul>
+<p>理论上，任意一个 jar 文件，只要加上了一个合法的 <code>module descriptor</code>，就可以升级为一个模块。而一个项目的多个模块就可以构成了模块系统。   </p>
+<p>那么，模块系统到底带来了什么好处？主要有以下三点:</p>
+<ol>
+<li>精简了 JRE。这是我认为最大的好处。引入了模块系统后，JDK 自身被划分为很多模块（以 JDK17 为例，划分为了 71 个模块）。通过新增的 <code>jlink</code> 工具，开发者可以根据实际应用场景随意组合模块，生成自定义的 JRE。相比于 JDK8 及之前，大大缩小了 JRE 的大小，这也让 Java 对嵌入式应用开发变得更友好。</li>
+<li>更好的依赖管理。有了模块系统，Java 可以根据 <code>module descriptor</code> 计算出各个模块间的依赖关系，一旦发现循环依赖，启动就会终止。同时，由于模块系统不允许不同模块导出相同的包，所以在查找包时，Java 能够精准的定位到一个模块，从而获得更好的性能。  </li>
+<li>更好的安全性。在模块系统引入之前，Java 就只有 4 种包可见性，这也让 Java 的封装性大打折扣。而引入了模块系统之后，利用 <code>module descriptor</code> 中的 <code>export</code> 关键词，可以精准地控制哪些类可以对外开放使用，哪些类只能内部使用，细化了类的可见性，带来了更好的安全性。</li>
+</ol>
+<h2 id="怎么定义模块？"><a href="#怎么定义模块？" class="headerlink" title="怎么定义模块？"></a>怎么定义模块？</h2><p>上面提到，模块有一个模块描述符 <code>module descriptor</code>，对应于根目录下的 <code>module-info.class</code> 文件。它是由 <code>module-info.java</code> 文件编译而成的，<code>module-info.java</code> 在每个模块项目源码的根目录下，也就是在 <code>java</code> 文件夹下。   </p>
+<p><code>module-info.java</code> 文件中的语法是这样子的：  </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token punctuation">[</span><span class="token keyword">open</span><span class="token punctuation">]</span> <span class="token keyword">module</span> <span class="token generics"><span class="token punctuation">&lt;</span>moduleName<span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">requires</span> <span class="token punctuation">[</span><span class="token keyword">transitive</span><span class="token punctuation">]</span> <span class="token generics"><span class="token punctuation">&lt;</span>module1<span class="token punctuation">></span></span><span class="token punctuation">;</span>
+    <span class="token keyword">exports</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">package</span><span class="token punctuation">></span></span> <span class="token punctuation">[</span><span class="token keyword">to</span> <span class="token generics"><span class="token punctuation">&lt;</span>module1<span class="token punctuation">></span></span><span class="token punctuation">,</span><span class="token generics"><span class="token punctuation">&lt;</span>module2<span class="token punctuation">></span></span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">opens</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">package</span><span class="token punctuation">></span></span> <span class="token punctuation">[</span><span class="token keyword">to</span> <span class="token generics"><span class="token punctuation">&lt;</span>module1<span class="token punctuation">></span></span><span class="token punctuation">,</span><span class="token generics"><span class="token punctuation">&lt;</span>module2<span class="token punctuation">></span></span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">provides</span> <span class="token operator">&lt;</span><span class="token keyword">interface</span> <span class="token operator">|</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span><span class="token operator">></span> <span class="token keyword">with</span> <span class="token generics"><span class="token punctuation">&lt;</span>implClass1<span class="token punctuation">></span></span><span class="token punctuation">,</span><span class="token generics"><span class="token punctuation">&lt;</span>implClass2<span class="token punctuation">></span></span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">;</span>
+    <span class="token keyword">uses</span> <span class="token operator">&lt;</span><span class="token keyword">interface</span> <span class="token operator">|</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span><span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<br>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>语法解读：  </p>
+<ul>
+<li><code>[open] module &lt;moduleName&gt;</code>：声明一个模块，模块名应全局唯一，不可重复。加上 <code>open</code> 关键词表示模块内的所有包都允许通过 Java 反射访问，模块声明体内不再允许使用 <code>opens</code> 语句。</li>
+<li><code>requires [transitive] &lt;module1&gt;</code>：声明模块依赖，一次只能声明一个依赖，如果依赖多个模块，需要多次声明。加上 <code>transitive</code> 关键词表示传递依赖，比如模块 A 依赖模块 B，模块 B 依赖模块 C，那么模块 A 就会自动依赖模块 C，类似于 Maven。</li>
+<li><code>exports &lt;package&gt; [to &lt;module1&gt;,&lt;module2&gt;,...]</code>：导出模块内的包（允许直接 <code>import</code> 使用），一次也是只能导出一个包，如果需要导出多个包，需要多次声明。如果需要定向导出到某个或某些模块，可以使用 <code>to</code> 关键词，后面跟上导出的目标模块或模块列表。不在导出包中的类，即使是 <code>public</code> 修饰的，其他模块也无法使用它。</li>
+<li><code>opens &lt;package&gt; [to &lt;module1&gt;,&lt;module2&gt;,...]</code>：开放模块内的包（允许通过 Java 反射访问），一次开放一个包，如果需要开放多个包，需要多次声明。如果需要定向开放，同样可以使用 <code>to</code> 关键词。</li>
+<li><code>provides &lt;interface | abstract class&gt; with &lt;implClass1&gt;,&lt;implClass2&gt;,...</code>：声明模块提供的 Java SPI 服务，一次可以声明多个服务实现类。</li>
+<li><code>uses &lt;interface | abstract class&gt;</code>：声明模块依赖的 Java SPI 服务，加上之后模块内的代码就可以通过 <code>ServiceLoader.load(Class)</code> 一次性加载所声明的 SPI 服务的所有实现类。</li>
+</ul>
+<h2 id="模块怎么使用？"><a href="#模块怎么使用？" class="headerlink" title="模块怎么使用？"></a>模块怎么使用？</h2><p>Java9 引入一系列新的命令和参数用于编译、运行和封装模块，其中最重要的就是两个参数 <code>--module-path</code> 和 <code>--module</code>。  </p>
+<ul>
+<li><code>--module-path</code>：简写为 <code>-p</code>，用来指定模块路径，多个模块之间用 “:”（ Mac 和 Linux 环境下）或者 “;”（ Windows 环境下）分隔。</li>
+<li><code>--module</code>：简写为 <code>-m</code>，用来指定待运行模块的主类，输入格式为 <code>&lt;module&gt;/&lt;main_class&gt;</code>。</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 编译模块</span>
+javac --module-path <span class="token operator">&lt;</span>module_path<span class="token operator">></span> <span class="token operator">&lt;</span>module<span class="token operator">></span>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span class="token comment"># 将 jar 包转换为模块，模块名称 &lt;output_jmod_name> 要与 module-info.java 中定义的模块名称一致</span>
+jmod create --class-path <span class="token operator">&lt;</span>jar_file<span class="token operator">></span> <span class="token operator">&lt;</span>output_jmod_name<span class="token operator">></span>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span class="token comment"># 运行模块</span>
+<span class="token function">java</span> --module-path <span class="token operator">&lt;</span>module_path<span class="token operator">></span> <span class="token parameter variable">--module</span> <span class="token operator">&lt;</span>module<span class="token operator">></span>/<span class="token operator">&lt;</span>main_class<span class="token operator">></span>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<span class="token comment"># 封装模块进 JRE </span>
+jlink --module-path <span class="token operator">&lt;</span>moudle_path<span class="token operator">></span> --add-modules <span class="token operator">&lt;</span>module<span class="token operator"><span class="token file-descriptor important">1</span>></span>,<span class="token operator">&lt;</span>module<span class="token operator"><span class="token file-descriptor important">2</span>></span>,<span class="token punctuation">..</span>. <span class="token parameter variable">--output</span> custom-jre
+
+<span class="token comment">## 分析模块依赖的其他模块</span>
+jdeps <span class="token parameter variable">-s</span> --module-path <span class="token operator">&lt;</span>module_path<span class="token operator">></span>  <span class="token operator">&lt;</span>module<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="自动模块和未命名模块"><a href="#自动模块和未命名模块" class="headerlink" title="自动模块和未命名模块"></a>自动模块和未命名模块</h2><p>上面已经提到，我们通过定义 <code>module-info.java</code> 文件可以声明一个模块，这种模块也叫做<strong>命名模块</strong>。但是对于 Java8 及之前的老应用，并没有模块信息，这种应该怎么办？答案就是通过 <strong>未命名模块</strong> 和 <strong>自动模块</strong>。  </p>
+<ul>
+<li><p><strong>未命名模块</strong>：所有 <code>--class-path</code> 下的 jar 文件自动转为未命名模块。未命名模块可以读取到其他所有的模块，并且会将自己包下的所有类都暴露给外界。需要注意的是未命名模块虽然导出了所有的包，但是由于命名模块无法在 <code>module-info.java</code> 文件中声明对未命名模块的依赖，因此命名模块无法读取未命名模块。未命名模块导出所有包是为了让其他的未命名模块能够加载这些类。</p>
+</li>
+<li><p><strong>自动模块</strong>：所有 <code>--module-path</code> 下的 jar 文件会自动转为自动模块。自动模块可以引用其他所有命名模块的类，并且也会将自己包下的所有类暴露给外界。它跟未命名模块不同的是，虽然都没有 <code>module-info.java</code> 文件，但是自动模块会由 JDK 根据 jar 包名自动生成模块名，以允许其他模块使用。生成模块名的规则是：首先会移除文件扩展名和版本号，然后用 “.” 替换所有非字母字符。换句话说，自动模块是一种特殊的命名模块，也遵循模块规则，只是模块名是由 JDK 自动生成的。</p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是对 Java9 开始有的模块化的介绍。虽然从引入之后到现在，模块化的使用还不够广泛，但是这并不影响它还是一个好特性，如果能够妥善运用，对开发工作还是大有益处的。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://emacoo.cn/coding/java-module-system/">【JDK 11】关于 Java 模块系统，看这一篇就够了</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903646971297806#heading-3">Java9模块化遇坑</a></li>
+<li><a target="_blank" rel="noopener" href="http://luomuren.top/articles/2023/07/17/1689574984946.html#toc_h2_2">Java 9模块化系统：构建可扩展的应用程序</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_16213721/7202551">Java 多个模块 获取当前模块路径 java多模块开发的好处</a></li>
+</ul>
 
                 
             </div>
@@ -464,7 +531,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://helloworldyc.github.io/blog-myc/2023/09/05/hello-world/">https://helloworldyc.github.io/blog-myc/2023/09/05/hello-world/</a>
+                    <a href="https://helloworldyc.github.io/blog-myc/2024/01/11/%E8%B0%88%E8%B0%88-Java9-%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/">https://helloworldyc.github.io/blog-myc/2024/01/11/%E8%B0%88%E8%B0%88-Java9-%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -501,7 +568,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/blog-myc/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                                <a href="/blog-myc/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/">
+                                    <span class="chip bg-color">模块化</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -541,9 +616,9 @@
 
 <script type="text/javascript">
     disqus_config = function () {
-        this.page.url = 'https://helloworldyc.github.io/2023/09/05/hello-world/';
-        this.page.identifier = '/blog-myc/2023/09/05/hello-world/';
-        this.page.title = 'Hello World';
+        this.page.url = 'https://helloworldyc.github.io/2024/01/11/%E8%B0%88%E8%B0%88-Java9-%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/';
+        this.page.identifier = '/blog-myc/2024/01/11/%E8%B0%88%E8%B0%88-Java9-%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/';
+        this.page.title = '谈谈 Java9+ 的模块化';
     };
     let disqus_shortname = 'myc';
 
@@ -571,17 +646,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/blog-myc/2023/09/05/%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E9%97%AE%E9%A2%98/">
+                <a href="/blog-myc/2024/01/11/%E8%B0%88%E8%B0%88-Java9-%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/">
                     <div class="card-image">
                         
                         
-                        <img src="/blog-myc/medias/featureimages/4.jpg" class="responsive-img" alt="博客部署问题">
+                        <img src="/blog-myc/medias/featureimages/16.jpg" class="responsive-img" alt="谈谈 Java9+ 的模块化">
                         
-                        <span class="card-title">博客部署问题</span>
+                        <span class="card-title">谈谈 Java9+ 的模块化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -591,9 +667,59 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-09-05
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            myc
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/blog-myc/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/blog-myc/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/">
+                        <span class="chip bg-color">模块化</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/blog-myc/2024/01/10/%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8D%97%E4%B9%8B-JavaFX-%E8%BF%90%E8%A1%8C%E5%92%8C%E6%89%93%E5%8C%85/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/blog-myc/medias/featureimages/13.jpg" class="responsive-img" alt="踩坑指南之 JavaFX 运行和打包">
+                        
+                        <span class="card-title">踩坑指南之 JavaFX 运行和打包</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -605,49 +731,11 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/blog-myc/tags/debug/">
-                        <span class="chip bg-color">debug</span>
+                    <a href="/blog-myc/tags/JavaFX/">
+                        <span class="chip bg-color">JavaFX</span>
                     </a>
                     
                 </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/blog-myc/2023/09/05/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/blog-myc/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-05
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            myc
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
             </div>
         </div>

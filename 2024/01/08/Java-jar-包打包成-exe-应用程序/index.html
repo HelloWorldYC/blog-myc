@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Socket 网络通信, myc的博客">
+    <meta name="keywords" content="Java jar 包打包成 exe 应用程序, myc的博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Socket 网络通信 | myc的博客</title>
+    <title>Java jar 包打包成 exe 应用程序 | myc的博客</title>
     <link rel="icon" type="image/png" href="/blog-myc/myfavicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog-myc/libs/awesome/css/all.css">
@@ -262,12 +262,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/blog-myc/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/blog-myc/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Socket 网络通信</h1>
+                    <h1 class="description center-align post-title">Java jar 包打包成 exe 应用程序</h1>
                 </div>
             </div>
         </div>
@@ -381,9 +381,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/blog-myc/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -399,14 +403,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    397
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -424,22 +428,94 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="什么是-Socket-套接字"><a href="#什么是-Socket-套接字" class="headerlink" title="什么是 Socket (套接字)"></a>什么是 Socket (套接字)</h2><p>Socket 是一个抽象概念，是计算机之间进行通信的一种约定或方式，应用程序可以通过它发送或接收数据。在使用 Socket 进行网络通信的时候，通过 Socket 可以让数据在网络中传输。操作套接字的时候，和我们读写文件很像，可以将 socket 函数看作一种特殊的文件。</p>
+                <p>当我们完成了 Java 程序并打成了 Jar 包，即可让别人引用或运行，为什么还要将 jar 包打包成 exe？   </p>
+<p>这是因为，jar 包需要在 JRE 的环境下才能运行，而在某些情况下我们需要让程序在无 JRE 的环境下运行。比如我们要把程序发给朋友使用，我们肯定不能要求朋友去安装 JDK 或者 JRE 吧，朋友一听使用这玩意儿还要那么麻烦，那肯定就不想使用了呀。所以说，像这种情况，我们要把 jar 包连同 JRE 一起打包到 exe 中，这样别人直接运行 exe 就可以了。   </p>
+<p>接下来就详细说一下将 jar 包打包成 exe 的步骤。   </p>
+<h2 id="前置准备"><a href="#前置准备" class="headerlink" title="前置准备"></a>前置准备</h2><ol>
+<li><p>准备好自己的程序 jar 包，确定 jar 包没有问题，在命令行中 <code>java -jar my.jar</code> 能够运行。</p>
+</li>
+<li><p>下载安装 <a target="_blank" rel="noopener" href="https://www.ej-technologies.com/download/exe4j/files">exe4j</a> 和 <a target="_blank" rel="noopener" href="https://jrsoftware.org/isdl.php">inno setup</a>。前者是将 jar 包转换成 exe 的工具，注意这里的 exe 仅是由 jar 包转换而成的，并没有包含 JRE 进去，因此到这一步还不能结束。后者是将 exe 和 JRE 打包成一个安装程序的工具。   </p>
 <blockquote>
-<p>socket 起源于 Unix，而 Unix&#x2F;Linux 基本哲学之一就是“一切皆文件”，都可以用 <strong>“open -&gt; write&#x2F;read -&gt; close”</strong> 模式来操作。  </p>
+<p>注意，exe4j 要使用注册码激活，不然转换后的 exe 启动时都会有弹窗。注册码网上直接搜即可，这里我用的是 <code>A-XVK258563F-1p4lv7mg7sav</code>。</p>
 </blockquote>
-<p>Socket 是 IP  地址与端口的组合，即 scoket &#x3D; （IP 地址 ： 端口号 port）</p>
-<p>套接字是成对出现的，分别在客户端和服务端上。在 Java 中使用 Socket 时常用到两个类，在 java.net 包中：</p>
+</li>
+</ol>
+<h2 id="exe4j-打包-jar"><a href="#exe4j-打包-jar" class="headerlink" title="exe4j 打包 jar"></a>exe4j 打包 jar</h2><p>理论上来说，直接跟着软件指引打包即可。但是，对于初用者来说，可能会在一些选项犹豫不决，因此这里直接将整个过程完整走一遍。   </p>
+<ol>
+<li><p>打开 exe4j 软件，若有之前保存好的 exe4j 配置，则可以加载配置文件，若没有，则直接下一步。    </p>
+<div align="center"><img src="exe4j安装之加载配置文件.png" width="100%"></div>
+</li>
+<li><p>选择打包的类型，我们要将 jar 包转换成 exe，所以要选择 “JAR in EXE” mode。  </p>
+<div align="center"><img src="exe4j打包模式.png" width="100%"></div>
+</li>
+<li><p>输入项目名称和输出路径。 </p>
+<div align="center"><img src="exe4j项目名称和项目导出路径.png" width="100%"></div>
+</li>
+<li><p>可执行类型选择 GUI，输入应用名称，设置应用图标。</p>
+<div align="center"><img src="exe4j程序信息设置.png" width="100%"></div>
+</li>
+<li><p>添加虚拟机参数 <code>-Dappdir=$&#123;EXE4J_EXEDIR&#125;</code>，添加 jar 包和程序主类。</p>
+<div align="center"><img src="exe4j添加虚拟机参数jar包主类.png" width="100%"></div>
+</li>
+<li><p>填写程序要求的 JDK 版本。</p>
+<div align="center"><img src="exe4jJDK版本要求.png" width="100%"></div>
+</li>
+<li><p>选中 Search sequence，添加 JRE 目录。</p>
+<div align="center"><img src="exe4j添加JRE目录.png" width="100%"></div>
+</li>
+<li><p>选择虚拟机类型，对于桌面应用程序和小型应用程序来说一般是 Client HotSpot VM。</p>
+<div align="center"><img src="exe4j虚拟机类型选择.png" width="100%"></div>
+</li>
+<li><p>之后可以一直默认下一步，直至编译完成，在退出时可以保存配置信息，方便后面复用。  </p>
+<div align="center"><img src="exe4j完成界面.png" width="100%"></div></li>
+</ol>
+<p>最终我们在输出目录可以看到一个 exe 程序生成了，双击就可以运行。但注意，这里的 exe 还是没封装进 JRE。</p>
+<h2 id="inno-setup-打包-exe-和-JRE"><a href="#inno-setup-打包-exe-和-JRE" class="headerlink" title="inno setup 打包 exe 和 JRE"></a>inno setup 打包 exe 和 JRE</h2><ol>
+<li><p>打开安装好的 inno setup 中的 Compil32.exe 程序，若有之前保存好的配置可以加载，否则就通过脚本向导 Script Wizard 新建一个。 </p>
+<div align="center"><img src="innosetup加载配置文件或新建配置.png" width="70%"></div>
+</li>
+<li><p>填写应用的名称、版本等信息。</p>
+<div align="center"><img src="innosetup设置应用名称和版本.png" width="70%"></div>
+</li>
+<li><p>设置应用目录文件夹名称，这里默认即可。</p>
+<div align="center"><img src="innosetup应用目录文件夹名称.png" width="70%"></div>
+</li>
+<li><p>选择要打包的 exe 程序，在这里也就是之前 exe4j 生成的 exe 程序。  </p>
+<div align="center"><img src="innosetup选择exe程序.png" width="70%"></div>
+</li>
+<li><p>设置应用程序关联的文件扩展名，默认即可。   </p>
+<div align="center"><img src="innosetup配置关联文件.png" width="70%"></div>
+</li>
+<li><p>设置应用程序快捷方式。</p>
+<div align="center"><img src="innosetup应用程序快捷方式设置.png" width="70%"></div>
+</li>
+<li><p>设置程序的安装模式。</p>
+<div align="center"><img src="innosetup安装模式设置.png" width="70%"></div>
+</li>
+<li><p>设置程序的语言。</p>
+<div align="center"><img src="innosetup安装程序语言设置.png" width="70%"></div>
+</li>
+<li><p>设置安装程序的名称和输出路径。</p>
+<div align="center"><img src="innosetup安装程序名称和输出路径.png" width="70%"></div>
+</li>
+<li><p>之后一直默认下一步，Finish 时，会提示是否编译，选否，因为还需要修改脚本文件。</p>
+<div align="center"><img src="innosetup安装程序完成时编译选否.png" width="50%"></div>
+</li>
+<li><p>修改脚本文件。    </p>
 <ul>
-<li>Socket：一般用于客户端</li>
-<li>ServerSocket：用于服务端</li>
+<li>在 <code>[setup]</code> 中添加这一行 <code>MinVersion=7</code>，表示安装程序最低支持的系统版本为 Windows7。    </li>
+<li>在 <code>[Files]</code> 中添加这一行 <code>Source: &quot;F:\workspace\homework-analysis-tool\app\custom-runtime-1\*&quot;; DestDir: &quot;&#123;app&#125;\custom-runtime-1&quot;; Flags: ignoreversion recursesubdirs createallsubdirs</code>。<br>它表示将 JRE 目录中的所有东西添加到安装后的程序的 <code>DestDir</code> 目录中。注意这里是要加 <code>*</code>，如果没加 <code>*</code>，则可能漏掉一些文件没转移，导致安装后的程序运行不起来。</li>
 </ul>
-<p>对于客户端，我们需要知道的是服务端的地址和端口号，因此，Socket 对象要绑定 (bind) 的是服务端的地址和端口号。<br>而对于服务端，我们并不确定连接请求来自哪个客户端，但是服务端提供了端口给客户端连接，我们只要监听这个端口就可以了，因此对于 ServerSocket 我们要绑定 (bind) 的是本台服务器的地址和端口号，也就是要标识服务器在哪个网络接口上进行监听以侦听连接请求。</p>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/luffsama/articles/17219842.html">https://www.cnblogs.com/luffsama/articles/17219842.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35745940/article/details/118461845">https://blog.csdn.net/qq_35745940/article/details/118461845</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuhenggchao186/article/details/52634180">https://blog.csdn.net/liuhenggchao186/article/details/52634180</a></li>
-</ul>
+</li>
+</ol>
+<div align="center"><img src="innosetup修改脚本文件.png" width="100%"></div>
+
+<ol start="12">
+<li>编译脚本文件，生成最终的安装程序。</li>
+</ol>
+<div align="center"><img src="innosetup编译脚本文件.png" width="100%"></div>
+
+<p>最终，我们从设置的输出目录中可以得到最终的安装程序，也是一个 exe 程序。这个程序就可以发送给朋友了，朋友拿到这个程序安装后就可以使用了。</p>
 
                 
             </div>
@@ -467,7 +543,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://helloworldyc.github.io/blog-myc/2023/09/05/Socket%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/">https://helloworldyc.github.io/blog-myc/2023/09/05/Socket%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/</a>
+                    <a href="https://helloworldyc.github.io/blog-myc/2024/01/08/Java-jar-%E5%8C%85%E6%89%93%E5%8C%85%E6%88%90-exe-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/">https://helloworldyc.github.io/blog-myc/2024/01/08/Java-jar-%E5%8C%85%E6%89%93%E5%8C%85%E6%88%90-exe-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -504,7 +580,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/blog-myc/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -544,9 +624,9 @@
 
 <script type="text/javascript">
     disqus_config = function () {
-        this.page.url = 'https://helloworldyc.github.io/2023/09/05/Socket%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/';
-        this.page.identifier = '/blog-myc/2023/09/05/Socket%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/';
-        this.page.title = 'Socket 网络通信';
+        this.page.url = 'https://helloworldyc.github.io/2024/01/08/Java-jar-%E5%8C%85%E6%89%93%E5%8C%85%E6%88%90-exe-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/';
+        this.page.identifier = '/blog-myc/2024/01/08/Java-jar-%E5%8C%85%E6%89%93%E5%8C%85%E6%88%90-exe-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/';
+        this.page.title = 'Java jar 包打包成 exe 应用程序';
     };
     let disqus_shortname = 'myc';
 
@@ -574,18 +654,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog-myc/2023/09/05/Socket%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/">
+                <a href="/blog-myc/2024/01/09/Java%E5%A4%84%E7%90%86Excel/">
                     <div class="card-image">
                         
                         
-                        <img src="/blog-myc/medias/featureimages/9.jpg" class="responsive-img" alt="Socket 网络通信">
+                        <img src="/blog-myc/medias/featureimages/3.jpg" class="responsive-img" alt="Java处理Excel">
                         
-                        <span class="card-title">Socket 网络通信</span>
+                        <span class="card-title">Java处理Excel</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -595,9 +674,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-05
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-01-09
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -606,7 +685,18 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/blog-myc/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/blog-myc/tags/Excel/">
+                        <span class="chip bg-color">Excel</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -643,6 +733,14 @@
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/blog-myc/tags/debug/">
+                        <span class="chip bg-color">debug</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -778,7 +876,7 @@
         <div class="col s12 m8 l8 copy-right">
             <!-- Copyright&nbsp;&copy; -->
             <!-- 
-                <span id="year">2023</span>
+                <span id="year">2023-2024</span>
              -->
             <!-- <span id="year">2023</span> -->
             <!-- <a href="/blog-myc/about" target="_blank">myc</a>
@@ -787,7 +885,7 @@
             <!-- <br> -->
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1.4k</span>&nbsp;字
+                class="white-color">9.8k</span>&nbsp;字
             
             
             

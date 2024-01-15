@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, myc的博客">
+    <meta name="keywords" content="踩坑指南之 JavaFX 运行和打包, myc的博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | myc的博客</title>
+    <title>踩坑指南之 JavaFX 运行和打包 | myc的博客</title>
     <link rel="icon" type="image/png" href="/blog-myc/myfavicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog-myc/libs/awesome/css/all.css">
@@ -262,12 +262,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/blog-myc/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/blog-myc/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">踩坑指南之 JavaFX 运行和打包</h1>
                 </div>
             </div>
         </div>
@@ -381,9 +381,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/blog-myc/tags/JavaFX/">
+                                <span class="chip bg-color">JavaFX</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -399,14 +403,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    73
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    5 分
                 </div>
                 
 
@@ -424,19 +428,72 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <p>上一篇已经说了，我有个小工具用到了 JavaFX，在这过程中运行和打包时遇到了一些坑，在此记录。   </p>
+<h2 id="运行时遇到的坑"><a href="#运行时遇到的坑" class="headerlink" title="运行时遇到的坑"></a>运行时遇到的坑</h2><p>在运行 JavaFX 程序时，出现错误：缺少 JavaFX 运行时组件, 需要使用该组件来运行此应用程序，如下图：   </p>
+<div align="center"><img src="运行错误-缺少JavaFX运行时组件.png" width="100%"></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>出现这个问题的原因是 JDK11 后，JavaFX 就从 JDK 剥离出来了，以独立的模块的形式提供，所以 JDK 中不包括 JavaFX 的运行时组件。   </p>
+<p>知道了原因，解决起来就好办多了。既然 JDK 没有，那就提供呗，具体的解决方法如下：  </p>
+<ol>
+<li>下载 <a target="_blank" rel="noopener" href="https://gluonhq.com/products/javafx/">JavaFX</a> jar 包。里面有 jmod 和 SDK 两种下载，选择 SDK 方式。  </li>
+<li>在程序启动配置中添加 <code>VM options</code> 参数，将 JavaFX SDK 添加进去：<code>--module-path &quot;E:\develop\javafx\javafx-sdk-21.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml</code>。</li>
+</ol>
+<div align="center"><img src="添加虚拟机启动参数.png" width="100%"></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这样，就可以顺利启动 JavaFX 程序了。</p>
+<h2 id="打包时遇到的坑"><a href="#打包时遇到的坑" class="headerlink" title="打包时遇到的坑"></a>打包时遇到的坑</h2><p>这里说的打包是指将 JavaFX 程序打成 jar 包并通过 JRE 成功运行，不是打成 exe 应用程序。关于打包成 exe 应用程序，可以看我 <a href="https://helloworldyc.github.io/blog-myc/2024/01/08/Java-jar-%E5%8C%85%E6%89%93%E5%8C%85%E6%88%90-exe-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/">Java jar 包打包成 exe 应用程序</a> 这篇文章。   </p>
+<p>打成 jar 包大家应该都很熟悉，直接用 Maven Package 不就行了吗，这有什么坑？<br>其实仔细想想，可以发现这里有两个问题，一是依赖，二是 JavaFX 运行时组件。为什么说这两个有坑，接下来详细说一下。  </p>
+<h3 id="问题一：依赖"><a href="#问题一：依赖" class="headerlink" title="问题一：依赖"></a>问题一：依赖</h3><p>我们知道，对于一个普通的 jar 包，我们要给别人使用，直接使用 Maven Package 打包后发给别人即可。但是，这是建立在对方有开发环境的前提下，对方可以直接导入我们所需的依赖。然而，JavaFX 程序并不是普通的 Java 程序，它很可能是给普通人使用的，也就是说对方没法导入我们所需的依赖。因此，我们需要将程序的依赖也打包进 jar 包中，否则最终用 JRE 运行 jar 包时很可能报 <code>ClassNotFoundException</code>，如下图所示。  </p>
+<div align="center"><img src="找不到类错误.png" width="100%"></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>想将程序的依赖一起打包进 jar 包中，可以利用 <code>maven-assembly-plugin</code> 或者 <code>maven-shade-plugin</code> 插件，这里以程序中所用的 <code>maven-assembly-plugin</code> 来示例。  </p>
+<p>在 pom 文件中，添加插件，如下：  </p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>finalName</span><span class="token punctuation">></span></span>homework-analysis<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>finalName</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugins</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.maven.plugins<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>maven-assembly-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>3.3.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>executions</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>execution</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>phase</span><span class="token punctuation">></span></span>package<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>phase</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>goals</span><span class="token punctuation">></span></span>
+                        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>goal</span><span class="token punctuation">></span></span>single<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>goal</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>goals</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
+                        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>archive</span><span class="token punctuation">></span></span>
+                            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>manifest</span><span class="token punctuation">></span></span>
+                                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mainClass</span><span class="token punctuation">></span></span>myc.HomeworkAnalysis<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mainClass</span><span class="token punctuation">></span></span>
+                            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>manifest</span><span class="token punctuation">></span></span>
+                        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>archive</span><span class="token punctuation">></span></span>
+                        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>descriptorRefs</span><span class="token punctuation">></span></span>
+                            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>descriptorRef</span><span class="token punctuation">></span></span>jar-with-dependencies<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>descriptorRef</span><span class="token punctuation">></span></span>
+                        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>descriptorRefs</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>execution</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>executions</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugins</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>之后，再利用 maven package 打包，就可以得到一个包含了程序和依赖的 jar 包。  </p>
+<h3 id="问题二：JavaFX-运行时组件"><a href="#问题二：JavaFX-运行时组件" class="headerlink" title="问题二：JavaFX 运行时组件"></a>问题二：JavaFX 运行时组件</h3><p>大家应该还记得上面说的，JavaFX 程序运行前要添加 <code>VM options</code>，目的就是让程序运行时能找到 JavaFX 运行时组件。那我们打包后的 jar 包怎么能找到 JavaFX 运行时组件呢？从理论上来说，我们添加 <code>VM options</code> 实际上就是添加 jar 包或者说 jmod，那么我们是否能够直接将 JavaFX SDK 的 jar 包也一起打包到我们的 jar 包中呢？这个我还没有尝试过，还有待证明。我采用的是另一种方法——在 JRE 中添加。   </p>
+<p>众所周知，要想运行一个 Java 程序，除了程序本身，还要有运行环境，也就是 JRE。既然没有将 JavaFX 运行时组件打包进我们的 jar 包中，那必然是要封装进 JRE。所幸，在 Java9 之后，有了模块化的概念，我们可以自定义所需的 JRE。关于模块化，可以看我另外一篇文章，这个不是本文的重点。这里主要说一下怎么将 JavaFX 运行时组件封装进 JRE，以及还有什么注意点。   </p>
+<p>这个其实也不复杂，在自定义 JRE 时，将 JavaFX 的模块也封装进去就好了：  </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jlink --module-path <span class="token string">"E:\develop\javafx\javafx-sdk-21.0.1\lib"</span> --add-modules <span class="token punctuation">[</span>yourOtherDeps<span class="token punctuation">]</span>,javafx.base,javafx.graphics,javafx.controls <span class="token parameter variable">--output</span> custom-runtime<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>注意：<code>[yourOtherDeps]</code> 是程序所需的其他依赖，可通过 <code>jdeps</code> 命令确定。</p>
+</blockquote>
+<p>这样，就得到了有 JavaFX 运行组件的 JRE。本来以为到这里就可以结束，但事实上这样子得到的 JRE 在运行 JavaFX jar 包的时候是会出现下图所示的错误的。  </p>
+<div align="center"><img src="通过SDK定义JRE会出现的错误.png" width="100%"></div>
+
+<p>这个错误直译就是由于找不到合适的管道导致图形化设备初始化失败，实际上就是由于封装的 JavaFX 运行时组件有问题导致的。这个错误困扰了我相当长一段时间，也尝试了网上所说的诸多解决方案，最终终于发现了问题所在。原来，我们在自定义 JRE 时导入的 JavaFX 模块是由 SDK 的 jar 包转换而来的，而 <strong>JavaFX 运行时组件要想正确的封装进 JRE 中应该要导入官网提供的 jmod</strong>。事实上，官网提供了 JavaFX 的 jmod 也正是为了让人能添加到自定义的 JRE 中。至于为什么通过 JavaFX SDK 封装的 JRE 有问题，我猜测可能是缺失了 module-info.java 文件或者是 module-info.java 文件中定义不全的缘故。   </p>
+<p>既然知道了问题出现在哪里，当然就好解决了。从<a target="_blank" rel="noopener" href="https://gluonhq.com/products/javafx/">官网</a>下载 JavaFX jmod，将 <code>module-path</code> 换为 jmod 的路径即可，如下。  </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jlink --module-path <span class="token string">"E:\develop\javafx\javafx-jmods-21.0.1"</span> --add-modules <span class="token punctuation">[</span>yourOtherDeps<span class="token punctuation">]</span>,javafx.base,javafx.graphics,javafx.controls <span class="token parameter variable">--output</span> custom-runtime<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>最后，这样子得到的 JRE 用来运行我们打包的 JavaFX jar 包就没有问题了。</p>
 
                 
             </div>
@@ -464,7 +521,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://helloworldyc.github.io/blog-myc/2023/09/05/hello-world/">https://helloworldyc.github.io/blog-myc/2023/09/05/hello-world/</a>
+                    <a href="https://helloworldyc.github.io/blog-myc/2024/01/10/%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8D%97%E4%B9%8B-JavaFX-%E8%BF%90%E8%A1%8C%E5%92%8C%E6%89%93%E5%8C%85/">https://helloworldyc.github.io/blog-myc/2024/01/10/%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8D%97%E4%B9%8B-JavaFX-%E8%BF%90%E8%A1%8C%E5%92%8C%E6%89%93%E5%8C%85/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -501,7 +558,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/blog-myc/tags/JavaFX/">
+                                    <span class="chip bg-color">JavaFX</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -541,9 +602,9 @@
 
 <script type="text/javascript">
     disqus_config = function () {
-        this.page.url = 'https://helloworldyc.github.io/2023/09/05/hello-world/';
-        this.page.identifier = '/blog-myc/2023/09/05/hello-world/';
-        this.page.title = 'Hello World';
+        this.page.url = 'https://helloworldyc.github.io/2024/01/10/%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8D%97%E4%B9%8B-JavaFX-%E8%BF%90%E8%A1%8C%E5%92%8C%E6%89%93%E5%8C%85/';
+        this.page.identifier = '/blog-myc/2024/01/10/%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8D%97%E4%B9%8B-JavaFX-%E8%BF%90%E8%A1%8C%E5%92%8C%E6%89%93%E5%8C%85/';
+        this.page.title = '踩坑指南之 JavaFX 运行和打包';
     };
     let disqus_shortname = 'myc';
 
@@ -575,13 +636,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog-myc/2023/09/05/%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E9%97%AE%E9%A2%98/">
+                <a href="/blog-myc/2024/01/11/%E8%B0%88%E8%B0%88-Java9-%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/">
                     <div class="card-image">
                         
                         
-                        <img src="/blog-myc/medias/featureimages/4.jpg" class="responsive-img" alt="博客部署问题">
+                        <img src="/blog-myc/medias/featureimages/16.jpg" class="responsive-img" alt="谈谈 Java9+ 的模块化">
                         
-                        <span class="card-title">博客部署问题</span>
+                        <span class="card-title">谈谈 Java9+ 的模块化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -592,7 +653,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-09-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-01-11
                         </span>
                         <span class="publish-author">
                             
@@ -605,8 +666,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/blog-myc/tags/debug/">
-                        <span class="chip bg-color">debug</span>
+                    <a href="/blog-myc/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/blog-myc/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/">
+                        <span class="chip bg-color">模块化</span>
                     </a>
                     
                 </div>
@@ -617,16 +682,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog-myc/2023/09/05/hello-world/">
+                <a href="/blog-myc/2024/01/10/JavaFX-%E5%85%A5%E9%97%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/blog-myc/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/blog-myc/medias/featureimages/15.jpg" class="responsive-img" alt="JavaFX 入门">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">JavaFX 入门</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -637,7 +702,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-10
                             </span>
                         <span class="publish-author">
                             
@@ -647,7 +712,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/blog-myc/tags/JavaFX/">
+                        <span class="chip bg-color">JavaFX</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>

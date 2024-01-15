@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, myc的博客">
+    <meta name="keywords" content="Java处理Excel, myc的博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | myc的博客</title>
+    <title>Java处理Excel | myc的博客</title>
     <link rel="icon" type="image/png" href="/blog-myc/myfavicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog-myc/libs/awesome/css/all.css">
@@ -262,12 +262,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/blog-myc/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/blog-myc/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">Java处理Excel</h1>
                 </div>
             </div>
         </div>
@@ -381,9 +381,17 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/blog-myc/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                            <a href="/blog-myc/tags/Excel/">
+                                <span class="chip bg-color">Excel</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -399,14 +407,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    73
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -424,19 +432,108 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <p>这几天，因为有一个小需求需要用 Java 处理 Excel，此前我并没有接触过这方面的内容，因此在做的过程中也学了一些，在这里做个总结。   </p>
+<p>在 Java 中处理 Excel，可以借助 Apache POI 来进行处理。<br>POI 全称是 Poor Obfuscation Implementation，意为简洁版的模糊实现。这个名字听起来会让人摸不着头脑，实际上它是 Apache 提供的对 Microsoft Office 文档读写的包。   </p>
+<h2 id="POI-的基本使用"><a href="#POI-的基本使用" class="headerlink" title="POI 的基本使用"></a>POI 的基本使用</h2><h3 id="依赖导入"><a href="#依赖导入" class="headerlink" title="依赖导入"></a>依赖导入</h3><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.poi<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>poi<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>4.1.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.poi<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>poi-ooxml<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>4.1.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="Excel-文档导入"><a href="#Excel-文档导入" class="headerlink" title="Excel 文档导入"></a>Excel 文档导入</h3><p>我们知道，Excel 文档也叫做工作簿，工作簿中有一张张工作表。在 POI 中，也是一样的结构，通过 <code>Workbook</code> 和 <code>Sheet</code> 来对应 Excel 文档和表格。<br>在 POI 中，有三种 <code>Workbook</code>：</p>
+<ol>
+<li><code>HSSF</code>：对应 office 2003 格式，即 .xls 格式的文件。</li>
+<li><code>XSSF</code>：对应 office 2007 及以上版本的格式，即 .xlsx 格式的文件。</li>
+<li><code>SXSSF</code>：是 <code>XSSF</code> 的兼容式流扩展，专门用于处理大型 Excel 文件，以避免内存溢出的问题，适用于需要处理大量数据的场景。</li>
+</ol>
+<p>因为项目中没有大型 Excel 文件需要处理，所以用的是 <code>XSSF</code> 类型的 <code>Workbook</code>，这里也以这种进行示例。<br>通过 <code>Workbook</code> 在导入 Excel 文档的时候，既可以通过文档路径导入，也可以通过输入流导入。  </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 通过文档路径导入 Excel 文档</span>
+<span class="token class-name">String</span> path <span class="token operator">=</span> <span class="token string">"E:\data\test1.xlsx"</span><span class="token punctuation">;</span>
+<span class="token class-name">Workbook</span> workbook <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XSSFWorkbook</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span class="token comment">// 通过输入流导入 Excel 文档</span>
+<span class="token class-name">String</span> path <span class="token operator">=</span> <span class="token string">"E:\data\test2.xlsx"</span><span class="token punctuation">;</span>
+<span class="token class-name">FileInputStream</span> fileInputStream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileInputStream</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Workbook</span> sheets <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XSSFWorkbook</span><span class="token punctuation">(</span>fileInputStream<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h3 id="表格操作"><a href="#表格操作" class="headerlink" title="表格操作"></a>表格操作</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 获取表格：通过表格索引获取，索引从 0 开始</span>
+<span class="token class-name">Sheet</span> sheet1 <span class="token operator">=</span> workbook<span class="token punctuation">.</span><span class="token function">getSheetAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 获取表格：通过表格名获取</span>
+<span class="token class-name">String</span> sheetName <span class="token operator">=</span> <span class="token string">"sheet1"</span><span class="token punctuation">;</span>
+<span class="token class-name">Sheet</span> sheet2 <span class="token operator">=</span> workbook<span class="token punctuation">.</span><span class="token function">getSheet</span><span class="token punctuation">(</span>sheetName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 新建表格</span>
+<span class="token class-name">Sheet</span> newSheet <span class="token operator">=</span> workbook<span class="token punctuation">.</span><span class="token function">createSheet</span><span class="token punctuation">(</span><span class="token string">"newSheetName"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="行操作"><a href="#行操作" class="headerlink" title="行操作"></a>行操作</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 获取行，方法参数是行号</span>
+<span class="token class-name">Row</span> row <span class="token operator">=</span> sheet<span class="token punctuation">.</span><span class="token function">getRow</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 获取表格的总行数</span>
+<span class="token keyword">int</span> rows <span class="token operator">=</span> sheet<span class="token punctuation">.</span><span class="token function">getPhysicalNumberOfRows</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 新建行，方法参数是行号</span>
+<span class="token class-name">Row</span> newRow <span class="token operator">=</span> sheet<span class="token punctuation">.</span><span class="token function">createRow</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 设置行的样式，这个用过没什么效果，最好还是每个单元格单独设置</span>
+row<span class="token punctuation">.</span><span class="token function">setRowStyle</span><span class="token punctuation">(</span>cellStyle<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="单元格操作"><a href="#单元格操作" class="headerlink" title="单元格操作"></a>单元格操作</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 获取单元格，方法参数是列号</span>
+<span class="token class-name">Cell</span> cell <span class="token operator">=</span> row<span class="token punctuation">.</span><span class="token function">getCell</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 获取单元格的数据类型，共有 6 种类型，在 CellType 枚举类中有定义</span>
+<span class="token class-name">CellType</span> cellType <span class="token operator">=</span> cell<span class="token punctuation">.</span><span class="token function">getCellType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 获取单元格的值，要根据单元格数据类型来获取，比如 String 类型</span>
+<span class="token class-name">String</span> value <span class="token operator">=</span> cell<span class="token punctuation">.</span><span class="token function">getStringCellValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 设置单元格的值，可以设置多种数据类型，比如 String</span>
+cell<span class="token punctuation">.</span><span class="token function">setCellValue</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 获取总列数</span>
+<span class="token keyword">int</span> totalCols <span class="token operator">=</span> row<span class="token punctuation">.</span><span class="token function">getPhysicalNumberOfCells</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 设置单元格样式</span>
+cell<span class="token punctuation">.</span><span class="token function">setCellStyle</span><span class="token punctuation">(</span>cellStyle<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="特殊操作"><a href="#特殊操作" class="headerlink" title="特殊操作"></a>特殊操作</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 格式化单元格中的数据，并返回字符串表示</span>
+<span class="token class-name">DataFormatter</span> dataFormatter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DataFormatter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> value <span class="token operator">=</span> dataFormatter<span class="token punctuation">.</span><span class="token function">formatCellValue</span><span class="token punctuation">(</span>cell<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 合并单元格，四个参数分别是合并区域的首行、尾行、首列、尾列</span>
+sheet<span class="token punctuation">.</span><span class="token function">addMergedRegion</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CellRangeAddress</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> totalCol <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 设置列宽</span>
+sheet<span class="token punctuation">.</span><span class="token function">setColumnWidth</span><span class="token punctuation">(</span>colIndex<span class="token punctuation">,</span> <span class="token number">20</span> <span class="token operator">*</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="字体样式设置"><a href="#字体样式设置" class="headerlink" title="字体样式设置"></a>字体样式设置</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 字体设置</span>
+<span class="token class-name">Font</span> font <span class="token operator">=</span> workbook<span class="token punctuation">.</span><span class="token function">createFont</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+font<span class="token punctuation">.</span><span class="token function">setFontName</span><span class="token punctuation">(</span><span class="token string">"微软雅黑"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 字体类型</span>
+font<span class="token punctuation">.</span><span class="token function">setBold</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// 加粗</span>
+font<span class="token punctuation">.</span><span class="token function">setFontHeightInPoints</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 字体大小</span>
+
+<span class="token comment">// 样式设置</span>
+<span class="token class-name">CellStyle</span> cellStyle <span class="token operator">=</span> workbook<span class="token punctuation">.</span><span class="token function">createCellStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+cellStyle<span class="token punctuation">.</span><span class="token function">setFont</span><span class="token punctuation">(</span>font<span class="token punctuation">)</span><span class="token punctuation">;</span>
+cellStyle<span class="token punctuation">.</span><span class="token function">setAlignment</span><span class="token punctuation">(</span><span class="token class-name">HorizontalAlignment</span><span class="token punctuation">.</span><span class="token constant">CENTER</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">// 水平居中</span>
+cellStyle<span class="token punctuation">.</span><span class="token function">setVerticalAlignment</span><span class="token punctuation">(</span><span class="token class-name">VerticalAlignment</span><span class="token punctuation">.</span><span class="token constant">CENTER</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 垂直居中</span>
+cellStyle<span class="token punctuation">.</span><span class="token function">setFillForegroundColor</span><span class="token punctuation">(</span><span class="token class-name">IndexedColors</span><span class="token punctuation">.</span><span class="token constant">LIGHT_GREEN</span><span class="token punctuation">.</span><span class="token function">getIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 设置单元格背景色</span>
+cellStyle<span class="token punctuation">.</span><span class="token function">setWrapText</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 文本超出时自动换行，不会挤在一行</span>
+<span class="token class-name">DataFormat</span> dataFormat <span class="token operator">=</span> workbook<span class="token punctuation">.</span><span class="token function">createDataFormat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+cellStyle<span class="token punctuation">.</span><span class="token function">setDataFormat</span><span class="token punctuation">(</span>dataFormat<span class="token punctuation">.</span><span class="token function">getFormat</span><span class="token punctuation">(</span><span class="token string">"#0.00"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 单元格中数据保留两位小数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="导出-Excel-文档"><a href="#导出-Excel-文档" class="headerlink" title="导出 Excel 文档"></a>导出 Excel 文档</h3><p>POI 导出 Excel 文档是通过输出流的方式导出的。  </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> outputPath <span class="token operator">=</span><span class="token string">"E:\test\output.xlsx"</span><span class="token punctuation">;</span>
+<span class="token class-name">FileOutputStream</span> fileOutputStream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileOutputStream</span><span class="token punctuation">(</span>outputPath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+workbook<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>fileOutputStream<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是 POI 的基本使用，当然，还有很多其他的操作，但是暂时还没用到，等用到了再来进行补充。总的来说这个并不难，基本就是对应表格进行处理。使用时最重要的就是要对 Excel 表格中的表结构要有一个清晰的把握，知道各行各列的数据代表着什么，对应着进行处理即可。</p>
 
                 
             </div>
@@ -464,7 +561,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://helloworldyc.github.io/blog-myc/2023/09/05/hello-world/">https://helloworldyc.github.io/blog-myc/2023/09/05/hello-world/</a>
+                    <a href="https://helloworldyc.github.io/blog-myc/2024/01/09/Java%E5%A4%84%E7%90%86Excel/">https://helloworldyc.github.io/blog-myc/2024/01/09/Java%E5%A4%84%E7%90%86Excel/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -501,7 +598,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/blog-myc/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                                <a href="/blog-myc/tags/Excel/">
+                                    <span class="chip bg-color">Excel</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -541,9 +646,9 @@
 
 <script type="text/javascript">
     disqus_config = function () {
-        this.page.url = 'https://helloworldyc.github.io/2023/09/05/hello-world/';
-        this.page.identifier = '/blog-myc/2023/09/05/hello-world/';
-        this.page.title = 'Hello World';
+        this.page.url = 'https://helloworldyc.github.io/2024/01/09/Java%E5%A4%84%E7%90%86Excel/';
+        this.page.identifier = '/blog-myc/2024/01/09/Java%E5%A4%84%E7%90%86Excel/';
+        this.page.title = 'Java处理Excel';
     };
     let disqus_shortname = 'myc';
 
@@ -575,13 +680,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog-myc/2023/09/05/%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E9%97%AE%E9%A2%98/">
+                <a href="/blog-myc/2024/01/10/JavaFX-%E5%85%A5%E9%97%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/blog-myc/medias/featureimages/4.jpg" class="responsive-img" alt="博客部署问题">
+                        <img src="/blog-myc/medias/featureimages/15.jpg" class="responsive-img" alt="JavaFX 入门">
                         
-                        <span class="card-title">博客部署问题</span>
+                        <span class="card-title">JavaFX 入门</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -592,7 +697,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-09-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-01-10
                         </span>
                         <span class="publish-author">
                             
@@ -605,8 +710,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/blog-myc/tags/debug/">
-                        <span class="chip bg-color">debug</span>
+                    <a href="/blog-myc/tags/JavaFX/">
+                        <span class="chip bg-color">JavaFX</span>
                     </a>
                     
                 </div>
@@ -617,16 +722,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog-myc/2023/09/05/hello-world/">
+                <a href="/blog-myc/2024/01/08/Java-jar-%E5%8C%85%E6%89%93%E5%8C%85%E6%88%90-exe-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/blog-myc/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/blog-myc/medias/featureimages/10.jpg" class="responsive-img" alt="Java jar 包打包成 exe 应用程序">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">Java jar 包打包成 exe 应用程序</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -637,7 +742,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-08
                             </span>
                         <span class="publish-author">
                             
@@ -647,7 +752,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/blog-myc/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
