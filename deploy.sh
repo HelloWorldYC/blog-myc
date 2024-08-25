@@ -21,6 +21,7 @@ echo "执行命令：cd ./docs/.vuepress/dist\n"
 cd ./public
 
 # 把网页文件发布到 blog-myc 仓库的 gh-page 分支
+git init
 echo '执行命令：git add -A'
 git add -A
 echo "git commit -m "
