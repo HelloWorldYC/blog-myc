@@ -44,18 +44,19 @@ render_drafts: false
 post_asset_folder: true
 relative_link: false
 future: true
+syntax_highlighter: prismjs  # highlight.js/prismjs，7.0 版本后取消了用 enable 开关
 highlight:
-  enable: false
-  line_number: true
-  auto_detect: false
-  tab_replace: ''
+  enable: false   # 关闭原有的高亮代码
+  line_number: true  # 行号
+  auto_detect: false  # 可自动检测代码块语言，但比较耗资源，建议关闭
+  tab_replace: ''     # 用代码内的 tab(\t) 替换给定值，默认值是两个空格
   wrap: true
   hljs: false
 prismjs:
   enable: true
-  preprocess: true
-  line_number: true
-  tab_replace: ''
+  preprocess: true    # F 浏览器端高亮 / T 服务器端高亮
+  line_number: true   # 行号显示
+  tab_replace: ''     
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
